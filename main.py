@@ -1,13 +1,9 @@
-# We use ZMQ to talk to the game server. The basic
-# communication is set up so you shouldn't need to worry about it much
 import zmq
 import sys
 import random
 
 PORT = 5556
 
-# Connect to the game server,
-# Make sure it is running
 print("Connecting to server")
 
 context = zmq.Context()
@@ -36,7 +32,6 @@ def valid_move(board, h, w):
     else:
         return True
 
-# If I had more time I would not make the moves random.
 def random_width():
     return random.randint(0,2)
 
@@ -56,28 +51,19 @@ def make_move(message):
     else:
         return make_move(message)
 
-
-# Make this function, using whatever other classes / functions you need
 def get_move(message):
-    
     move = make_move(message)
     return move
 
 while True:
     sys.stdout.flush()
 
-    # Get the next message from the server. Note that it may be multi-line
     message = socket.recv_string()
 
-    # If the server replies 'done', the game is finished
     if 'done' in message:
         print(message)
         break
 
-    # Message contains game state information,
-    # You'll want to parse message and construct
-    # a valid response
     reply = get_move(message)
 
-    # Send reply to the server
     socket.send_string(reply)
