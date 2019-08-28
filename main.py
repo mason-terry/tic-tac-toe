@@ -32,11 +32,17 @@ def valid_move(board, h, w):
     else:
         return True
 
-def random_width():
+def determine_width():
     return random.randint(0,2)
 
-def random_height():
+def determine_height():
     return random.randint(0,2)
+
+def random_width():
+    return determine_width()
+
+def random_height():
+    return determine_height()
 
 def make_move(message):
     board = get_board(message)
